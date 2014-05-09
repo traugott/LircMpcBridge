@@ -34,6 +34,14 @@ class Test(unittest.TestCase):
         self.processor.processCommand("KEY_MUTE")
         self.assertEqual(["volume", "10"], self.commands[-1][1:3])
         
+    def testKey1To9(self):
+        for i in range(1,10):
+            self.processor.processCommand("KEY_"+str(i))
+            self.assertEqual(["/usr/bin/mpc","clear"], self.commands[-3])
+            self.assertEqual(["/usr/bin/mpc","load", "radio"], self.commands[-2])
+            self.assertEqual(["/usr/bin/mpc","play", str(i)], self.commands[-1])
+
+        
     def testUnknownKey(self):
         self.processor.processCommand("RJKLJGKLDJGFDJKLL")
         

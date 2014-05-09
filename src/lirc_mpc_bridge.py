@@ -76,6 +76,12 @@ class CommandProcessor():
             self.__volume = self.__volumeSteps[index]
             return self.__createVolumeCommand()
         return []
+    
+    def __lambdaKeyFactory(self, value):
+        return lambda : [["/usr/bin/mpc","clear"],
+                         ["/usr/bin/mpc","load", "radio"],
+                         ["/usr/bin/mpc","play", str(value)],
+                                 ]
 
     def __init__(self, executor):
         self.__executor = executor
@@ -84,7 +90,16 @@ class CommandProcessor():
         self.__commandToFunctionMap = {
               "KEY_VOLUMEUP": self.__volUp,
               "KEY_VOLUMEDOWN": self.__volDown,
-              "KEY_MUTE": self.__mute
+              "KEY_MUTE": self.__mute,
+              "KEY_1": self.__lambdaKeyFactory(1),
+              "KEY_2": self.__lambdaKeyFactory(2),
+              "KEY_3": self.__lambdaKeyFactory(3),
+              "KEY_4": self.__lambdaKeyFactory(4),
+              "KEY_5": self.__lambdaKeyFactory(5),
+              "KEY_6": self.__lambdaKeyFactory(6),
+              "KEY_7": self.__lambdaKeyFactory(7),
+              "KEY_8": self.__lambdaKeyFactory(8),
+              "KEY_9": self.__lambdaKeyFactory(9)
               }
         self.__volumeSteps = [0,5,10,15,20,30,40,50,60,70,80,90,100]
         
