@@ -91,7 +91,7 @@ class CommandProcessor():
               "KEY_VOLUMEUP": self.__volUp,
               "KEY_VOLUMEDOWN": self.__volDown,
               "KEY_MUTE": self.__mute,
-              "KEY_1": self.__lambdaKeyFactory(1),
+              "KEY_KP1": self.__lambdaKeyFactory(1),
               "KEY_2": self.__lambdaKeyFactory(2),
               "KEY_3": self.__lambdaKeyFactory(3),
               "KEY_4": self.__lambdaKeyFactory(4),
