@@ -77,11 +77,41 @@ class CommandProcessor():
             return self.__createVolumeCommand()
         return []
     
-    def __lambdaKeyFactory(self, value):
-        return lambda : [["/usr/bin/mpc","clear"],
+    def __keyn(self, value):
+        self.__lastPlayed = value
+        return [["/usr/bin/mpc","clear"],
                          ["/usr/bin/mpc","load", "radio"],
-                         ["/usr/bin/mpc","play", str(value)],
-                                 ]
+                         ["/usr/bin/mpc","play", str(value)]
+                         ]
+    def __key1(self):
+        return self.__keyn(1)
+    
+    def __key2(self):
+        return self.__keyn(2)
+    
+    def __key3(self):
+        return self.__keyn(3)
+    
+    def __key4(self):
+        return self.__keyn(4)
+    
+    def __key5(self):
+        return self.__keyn(5)
+    
+    def __key6(self):
+        return self.__keyn(6)
+    
+    def __key7(self):
+        return self.__keyn(7)
+    
+    def __key8(self):
+        return self.__keyn(8)
+    
+    def __key9(self):
+        return self.__keyn(9)
+    
+    def __play(self):
+        return self.__keyn(self.__lastPlayed)
 
     def __init__(self, executor):
         self.__executor = executor
@@ -91,19 +121,22 @@ class CommandProcessor():
               "KEY_VOLUMEUP": self.__volUp,
               "KEY_VOLUMEDOWN": self.__volDown,
               "KEY_MUTE": self.__mute,
-              "KEY_KP1": self.__lambdaKeyFactory(1),
-              "KEY_2": self.__lambdaKeyFactory(2),
-              "KEY_3": self.__lambdaKeyFactory(3),
-              "KEY_4": self.__lambdaKeyFactory(4),
-              "KEY_5": self.__lambdaKeyFactory(5),
-              "KEY_6": self.__lambdaKeyFactory(6),
-              "KEY_7": self.__lambdaKeyFactory(7),
-              "KEY_8": self.__lambdaKeyFactory(8),
-              "KEY_9": self.__lambdaKeyFactory(9)
+              "KEY_KP1": self.__key1,
+              "KEY_KP2": self.__key2,
+              "KEY_KP3": self.__key3,
+              "KEY_KP4": self.__key4,
+              "KEY_KP5": self.__key5,
+              "KEY_KP6": self.__key6,
+              "KEY_KP7": self.__key7,
+              "KEY_KP8": self.__key8,
+              "KEY_KP9": self.__key9,
+              "KEY_STOPCD" : lambda :[["/usr/bin/mpc", "stop"]],
+              "KEY_PLAY" : self.__play
               }
         self.__volumeSteps = [0,5,10,15,20,30,40,50,60,70,80,90,100]
         
         self.__mute = False
+        self.__lastPlayed = 1
     
     def setVolume(self, volume):
         "Set the volume. The value has to be an int and in __volumeSteps"

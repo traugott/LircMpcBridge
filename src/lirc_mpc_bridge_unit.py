@@ -25,6 +25,17 @@ class Test(unittest.TestCase):
         self.processor.processCommand("KEY_VOLUMEDOWN")
         self.assertEqual("5", self.commands[-1][2])
     
+    def testStop(self):
+        self.processor.processCommand("KEY_STOPCD")
+        self.assertEqual(["stop"], self.commands[-1][1:])
+
+    def testPlayThenStop(self):
+        self.processor.processCommand("KEY_KP2")
+        self.processor.processCommand("KEY_STOPCD")
+        self.processor.processCommand("KEY_PLAYPAUSE")
+        self.assertEqual(["play", "2"], self.commands[-1][1:])
+
+
     def testMute(self):
         self.processor.setVolume(10)
         
@@ -36,7 +47,7 @@ class Test(unittest.TestCase):
         
     def testKey1To9(self):
         for i in range(1,10):
-            self.processor.processCommand("KEY_"+str(i))
+            self.processor.processCommand("KEY_KP"+str(i))
             self.assertEqual(["/usr/bin/mpc","clear"], self.commands[-3])
             self.assertEqual(["/usr/bin/mpc","load", "radio"], self.commands[-2])
             self.assertEqual(["/usr/bin/mpc","play", str(i)], self.commands[-1])
